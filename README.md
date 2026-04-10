@@ -1,5 +1,6 @@
 # ipodsync
-Sync your playlists the lazy way. For people who don't care about arranging tracks and just want their music on their iPod, now.
+✨ Sync your playlists the lazy way. For people who don't care about arranging tracks and just want their music on their iPod, now.
+✨ Read this readme first please
 
 # 🎧 iPod LazySync OS
 
@@ -50,4 +51,4 @@ For this tool to work, your iPod **MUST** be configured for manual management:
 * **OS:** Windows (Requires iTunes for Windows installed).
 * **Software:** iTunes must be running in the background.
 * **Python:** Version 3.10+ recommended.
-* **Install dependencies first** pip install flask pywin32 mutagen
+* **Install dependencies first:** pip install flask pywin32 mutagen
