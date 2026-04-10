@@ -50,11 +50,4 @@ For this tool to work, your iPod **MUST** be configured for manual management:
 * **OS:** Windows (Requires iTunes for Windows installed).
 * **Software:** iTunes must be running in the background.
 * **Python:** Version 3.10+ recommended.
-
-### 3. Installation
-```bash
-# Clone the repository
-git clone [https://github.com/your-username/iPod-LazySync.git](https://github.com/your-username/iPod-LazySync.git)
-
-# Install dependencies
-pip install flask pywin32 mutagen
+* **Install dependencies first** pip install flask pywin32 mutagen
