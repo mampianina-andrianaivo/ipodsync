@@ -1,7 +1,3 @@
-C'est noté. Voici le README final complet avec la section clarifiant la différence technique entre les deux scripts de lancement.
-
----
-
 # 🎧 iPod LazySync OS
 
 **"Sync your playlists the lazy way (for people who don't care about library management)."**
@@ -32,7 +28,7 @@ This app is designed for users who hate the rigid structure of the iTunes Librar
 
 * **Lazy Syncing:** No need to manually import songs into iTunes first.
 * **Strict Waterfall Sequence:** Windows finishes 100% of the work (renaming + tagging) before iTunes is even authorized to touch the files.
-* **Physical Filename Authority:** The filename on your disk becomes the *Title* and the new *Playlist name* created on your iPod.
+* **Physical Filename Authority:** The filename on your disk becomes the *Title* and *Playlist name* newly created on your iPod.
 * **Automatic Sanitization (Slugify):** No more special characters, emojis, or sync-breaking symbols in your filenames.
 * **Folder-to-Group Logic:** The folder name is automatically injected as the *Artist* and *Album*, ensuring perfect sorting on the device.
 * **Deep Physical Purge:** A dedicated tool to wipe a playlist and its associated physical files from the iPod's memory to free up space.
@@ -86,23 +82,3 @@ Your iPod **MUST** be configured for manual management:
 ### 2. Dependencies
 ```bash
 pip install flask pywin32 mutagen
-```
-
----
-
-## 📦 Compilation & Versions
-
-Depending on how you want the app to behave, use one of these two scripts:
-
-| Script | Version | Behavior |
-| :--- | :--- | :--- |
-| `server_lite.py` | **Lite** | Starts a background Flask server and opens your **default web browser** (Chrome, Edge, etc.) to show the UI. |
-| `server_webv.py` | **Big / Standalone** | Uses the `pywebview` library to open the UI in a **dedicated, independent window** (no browser tabs/bars). It feels like a native Windows App. |
-
-#### **Build Commands (PyInstaller):**
-
-**For Lite version:**
-`pyinstaller --noconfirm --onefile --windowed --name "iPod_Manager_Lite4" --add-data "index.html;." --exclude-module "webview" --hidden-import "win32com.client" --hidden-import "pythoncom" server_lite.py`
-
-**For WebV version:**
-`pyinstaller --noconsole --onefile --name "iPod_Manager_Big4" --add-data "index.html;." server_webv.py`
