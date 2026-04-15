@@ -96,8 +96,8 @@ Depending on how you want the app to behave, use one of these two scripts:
 
 | Script | Version | Behavior |
 | :--- | :--- | :--- |
-| `server_lite.py` | **Lite** | Starts a background Flask server and opens your **default web browser** (Chrome, Edge, etc.) to show the UI. ~25Mo|
-| `server_webv.py` | **Big / Standalone** | Uses the `pywebview` library to open the UI in a **dedicated, independent window** (no browser tabs/bars). It feels like a native Windows App. ~130Mo|
+| `server_lite.py` | **Lite** | Starts a background Flask server and opens your **default web browser** (Chrome, Edge, etc.) to show the UI. ~25Mo .exe file output|
+| `server_webv.py` | **Big / Standalone** | Uses the `pywebview` library to open the UI in a **dedicated, independent window** (no browser tabs/bars). It feels like a native Windows App. ~130Mo .exe file output|
 
 #### 2. Build Commands (PyInstaller)
 
