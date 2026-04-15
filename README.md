@@ -80,9 +80,9 @@ Your iPod **MUST** be configured for manual management:
 3.  Disable any automatic synchronization.
 
 ### 2. Dependencies
-```bash
+
 pip install flask pywin32 mutagen
-```
+
 ---
 
 ## 📦 Compilation & Versions
