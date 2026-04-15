@@ -16,7 +16,9 @@ This app is designed for users who hate the rigid structure of the iTunes Librar
 ---
 
 ## ⚠️ File Integrity & "Lazy" Trade-off
-**This app performs destructive metadata and filesystem operations.** * It **permanently renames** your physical files on Windows to a clean format.
+**This app performs destructive metadata and filesystem operations.**
+
+* It **permanently renames** your physical files on Windows to a clean format.
 * It **overwrites** internal ID3 tags (Title, Artist, Album) to force perfect iPod grouping.
 * **The "Source of Truth" is the file name:** The app takes what you named your file on Windows and forces it as the song title.
 * **Why?** Because a "lazy" user doesn't want to see "Unknown Artist" or 50 different albums for one folder. We clean everything so you don't have to. 
