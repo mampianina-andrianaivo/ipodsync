@@ -69,7 +69,7 @@ When you launch the app, the interface will open automatically.
 * **↻ (Refresh):** Force a re-scan of the device's playlists.
 * **👁 (View):** Lists every track inside the selected playlist in the terminal.
 * **DELETE PLAYLIST:** Triggers a **Confirm Purge**. This physically deletes the MP3s from the iPod's storage.
-* **CLEAN ORPHANS AND TAGS:** Scans for "ghost" files and fixes logical inconsistencies.
+* **CLEAN ORPHANS AND TAGS:** Scans for "ghost" files and fixes logical inconsistencies, then deletes all mp3 inside the Music storage of the iPod when they are associated with any of your playlist, and corrects all previous "incorrect" tag (maybe your weird tags and orphan mp3 before using this tool).
 
 ---
 
