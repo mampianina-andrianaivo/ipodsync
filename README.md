@@ -85,7 +85,7 @@ Your iPod **MUST** be configured for manual management:
 
 ### 2. Dependencies
 
-pip install flask pywin32 mutagen
+`pip install flask pywin32 mutagen`
 
 ---
 
