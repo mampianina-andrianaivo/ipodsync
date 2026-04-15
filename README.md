@@ -22,7 +22,7 @@ This app is designed for users who hate the rigid structure of the iTunes Librar
 * It **overwrites** internal ID3 tags (Title, Artist, Album) to force perfect iPod grouping.
 * **The "Source of Truth" is the file name:** The app takes what you named your file on Windows and forces it as the song title.
 * **Why?** Because a "lazy" user doesn't want to see "Unknown Artist" or 50 different albums for one folder. We clean everything so you don't have to. 
-* **Backup:** Always backup your music folder before a first sync if you aren't sure. (But then again, a true lazy user probably won't).
+* **Maybe backup:** If you are not sure, I advise you to backup your music folder before a first sync if you aren't sure. **(But then again, a true lazy user probably won't).**
 
 ---
 
