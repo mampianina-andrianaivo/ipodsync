@@ -7,34 +7,334 @@
 <style>
     :root { --accent: #00e5ff; --bg: #050508; --panel: #0d0d14; --text: #cdd6f4; --border: #1e1e2e; --danger: #f38ba8; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-    header { padding: 15px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .main-container { display: flex; flex: 1; padding: 25px; gap: 25px; min-height: 0; }
-    .left-panel { flex: 0 0 380px; display: flex; flex-direction: column; gap: 15px; }
-    .right-panel { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
-    .card-label { font-family: 'Share Tech Mono'; font-size: 11px; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px; display: block; }
-    .ipod-bar { display: flex; align-items: center; gap: 10px; font-family: 'Share Tech Mono'; font-size: 12px; background: #000; padding: 8px; border-radius: 5px; margin-bottom: 10px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #333; }
-    .dot.on { background: #a6e3a1; box-shadow: 0 0 5px #a6e3a1; }
-    .path-box { background: #000; padding: 10px; font-family: 'Share Tech Mono'; font-size: 12px; color: var(--accent); border-radius: 5px; overflow: hidden; text-overflow: ellipsis; }
-    .btn { background: var(--accent); color: #000; border: none; padding: 10px; border-radius: 5px; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Rajdhani'; transition: opacity 0.2s; }
-    .btn:disabled { opacity: 0.3; pointer-events: none; cursor: not-allowed; }
-    .btn-danger { background: var(--danger); }
-    .pl-select { width: 100%; background: #000; color: var(--accent); border: 1px solid var(--border); padding: 8px; border-radius: 5px; font-family: 'Share Tech Mono'; margin-bottom: 10px; }
-    .terminal { background: #020205; flex: 1; border-radius: 8px; padding: 15px; font-family: 'Share Tech Mono'; font-size: 13px; color: #a6e3a1; overflow-y: scroll; border: 1px solid var(--border); min-height: 0; }
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 100; }
-    
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #050508; border-left: 1px solid #1e1e2e; }
-    ::-webkit-scrollbar-thumb { background: #00e5ff; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #70efff; box-shadow: 0 0 10px #00e5ff; }
+/* --- RESET GLOBAL & VARIABLES --- */
+*, *::before, *::after {
+    box-sizing: border-box; /* Indispensable pour que padding/border ne dépassent pas */
+}
+
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Arial', sans-serif; 
+    height: 100vh; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    user-select: none; 
+    -webkit-user-select: none;
+}
+
+/* --- LAYOUT PRINCIPAL --- */
+header { 
+    padding: 15px 40px; 
+    border-bottom: 1px solid var(--border); 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-shrink: 0; 
+}
+
+.main-container { 
+    display: flex; 
+    flex: 1; 
+    padding: 25px; 
+    gap: 25px; 
+    min-height: 0; 
+    min-width: 0;
+    overflow: hidden; 
+}
+
+.left-panel { 
+    flex: 0 0 250px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px;
+    overflow-y: auto; 
+    padding-right: 5px; 
+}
+
+.right-panel { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 0; 
+    min-width: 0;
+    width: 0;           /* Force le recalcul flex */
+    flex-basis: 0;      /* Force la flexibilité */
+    overflow-x: hidden !important; /* Tue la barre horizontale */
+    overflow-y: auto; 
+}
+
+/* Force tous les enfants directs du panel droit à ne pas déborder */
+.right-panel > div {
+    width: 100%;
+    min-width: 0;
+}
+
+/* --- COMPOSANTS --- */
+.card { 
+    background: var(--panel); 
+    border: 1px solid var(--border); 
+ 
+    padding: 18px; 
+    width: 100%;
+}
+
+.card-label { 
+    font-family: 'Arial', sans-serif; 
+    font-size: 11px; 
+    color: var(--accent); 
+    letter-spacing: 2px; 
+    margin-bottom: 10px; 
+    display: block; 
+}
+
+.ipod-bar { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    font-family: 'Arial', sans-serif; 
+    font-size: 12px; 
+    background: #000; 
+    padding: 8px; 
+
+    margin-bottom: 10px; 
+}
+
+.dot { width: 8px; height: 8px; background: #333; }
+.dot.on { background: #a6e3a1; box-shadow: 0 0 5px #a6e3a1; }
+
+.path-box {
+    background: #000;
+    padding: 10px 15px;
+    font-family: 'Arial', sans-serif;
+    font-size: 9px;
+    color: var(--accent);
+
+    height: 80px;
+    display: block;
+    text-align: left;
+    white-space: normal;
+    word-break: break-all;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* --- BOUTONS --- */
+.btn { 
+    background: var(--accent); 
+    color: #000; 
+    border: none; 
+    padding: 10px; 
+
+    font-weight: 700; 
+    cursor: pointer; 
+    width: 100%; 
+    font-family: 'Arial'; 
+    transition: opacity 0.2s; 
+}
+
+.btn:disabled { opacity: 0.3; pointer-events: none; }
+.btn-danger { background: var(--danger); }
+
+.btn-copy { 
+    background: var(--border); 
+    color: var(--accent); 
+    border: none; 
+    padding: 10px; 
+
+    font-weight: 700; 
+    cursor: pointer; 
+    font-family: 'Arial'; 
+    font-size: 12px; 
+    white-space: nowrap; 
+    transition: opacity 0.2s; 
+}
+
+.btn-copy:hover:not(:disabled) { background: #2a2a3e; }
+
+/* --- INPUTS & TERMINAL --- */
+/* Custom dropdown */
+.custom-select-wrapper { position: relative; width: 100%; margin-bottom: 10px; }
+.custom-select-trigger {
+    width: 100%; background: #000; color: var(--accent);
+    border: 1px solid var(--border); padding: 8px 30px 8px 10px;
+    cursor: pointer; display: flex;
+    justify-content: space-between; align-items: center;
+    user-select: none;
+}
+.custom-select-trigger::after {
+    content: '▾'; color: var(--accent); font-size: 14px; flex-shrink: 0;
+}
+.custom-select-trigger.disabled { opacity: 0.3; pointer-events: none; }
+.custom-options {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: #0d0d14; border: 1px solid var(--accent);
+    z-index: 50; max-height: 180px; overflow-y: auto;
+}
+.custom-options.open { display: block; }
+.custom-option {
+    padding: 8px 12px; color: var(--accent); cursor: pointer;
+}
+.custom-option:hover { background: #003344; }
+.custom-option.selected { background: #001a22; }
+
+.terminal { 
+    background: #020205; 
+    flex: 1; 
+
+    padding: 15px; 
+    font-family: 'Arial', sans-serif; 
+    font-size: 13px; 
+    color: #a6e3a1; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    border: 1px solid var(--border); 
+    min-height: 0; 
+    word-break: break-all;
+}
+
+.log-entry {
+    display: block;
+    width: 100%;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+/* --- UI COMPONENTS --- */
+.modal { 
+    display: none; 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.8); 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 100; 
+}
+
+.custom-select-trigger {
+    font-size: 10px;
+}
+
+.custom-option {
+    font-size: 10px;
+}
+
+
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #050508; border-left: 1px solid #1e1e2e; }
+::-webkit-scrollbar-thumb { background: #00e5ff; }
+::-webkit-scrollbar-thumb:hover { background: #70efff; }
+
+
+#btn-refresh {
+    /* Ton style actuel ici */
+
+    transition: all 0.2s;
+    outline: none;
+}
+
+#btn-refresh:active {
+    /* 1. On change la couleur de la bordure pour du blanc pur ou une couleur vive */
+    border-color: var(--accent);
+
+    /* 2. On crée l'effet de brillance (Glow) externe */
+    /* On superpose plusieurs ombres pour plus d'intensité */
+    box-shadow: 
+        0 0 10px var(--accent), 
+        0 0 5px var(--accent), 
+        0 0 5px #00d4ff; /* Optionnel : une pointe de couleur (ex: bleu électrique) */
+}
+
+
+
+
+
+.btn {
+    /* Ton style actuel ici */
+
+    transition: all 0.2s;
+    outline: none;
+}
+
+.btn:active {
+    /* 1. On change la couleur de la bordure pour du blanc pur ou une couleur vive */
+    border-color: var(--accent);
+
+    /* 2. On crée l'effet de brillance (Glow) externe */
+    /* On superpose plusieurs ombres pour plus d'intensité */
+    box-shadow: 
+        0 0 10px var(--accent), 
+        0 0 5px var(--accent), 
+        0 0 5px var(--accent); /* Optionnel : une pointe de couleur (ex: bleu électrique) */
+}
+
+
+
+
+
+#del-btn {
+    /* Ton style actuel ici */
+
+    transition: all 0.2s;
+    outline: none;
+}
+
+#del-btn:active {
+    /* 1. On change la couleur de la bordure pour du blanc pur ou une couleur vive */
+    border-color: var(--danger);
+
+    /* 2. On crée l'effet de brillance (Glow) externe */
+    /* On superpose plusieurs ombres pour plus d'intensité */
+    box-shadow: 
+        0 0 10px var(--danger), 
+        0 0 5px var(--danger), 
+        0 0 5px var(--danger); /* Optionnel : une pointe de couleur (ex: bleu électrique) */
+}
+
+
+
+/* On cible la classe présente sur ton bouton */
+.btn-danger {
+    transition: all 0.2s;
+    outline: none;
+    /* On s'assure qu'une bordure existe déjà pour éviter un saut de pixels */
+    border: 2px solid transparent; 
+}
+
+.btn-danger:active {
+    /* 1. La bordure devient rouge vif (ou la couleur de ta variable) */
+    border-color: var(--bs-danger, #dc3545) !important;
+
+    /* 2. L'effet de brillance cumulé */
+    /* Note : j'ai utilisé --bs-danger qui est la variable standard de Bootstrap */
+    box-shadow: 
+        0 0 10px var(--bs-danger, #dc3545), 
+        0 0 5px var(--bs-danger, #dc3545), 
+        0 0 5px var(--bs-danger, #dc3545) !important;
+        
+    /* Petit bonus pour le côté "flash" : on augmente un peu la luminosité */
+    filter: brightness(1.2);
+}
+
+
+
+.btn-copy {
+width:40px;
+height:40px;
+font-size:7px;}
+
 </style>
 </head>
 <body>
 
 <header>
-    <div style="font-family:'Share Tech Mono'; letter-spacing:3px;">IPOD_SYNC_OS</div>
+    <div style="font-family:'Arial', sans-serif; letter-spacing:3px;">IPOD_SYNC_OS</div>
     <div id="status-tag" style="font-size:12px; color:var(--accent);">READY</div>
 </header>
 
@@ -43,7 +343,10 @@
         <div class="card">
             <span class="card-label">01 / DEVICE</span>
             <div class="ipod-bar"><div id="ipod-dot" class="dot"></div> <span id="ipod-label">Checking...</span></div>
-            <div class="path-box" id="path-box">--- NO FOLDER ---</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div class="path-box" id="path-box" style="flex:1;">--- NO FOLDER ---</div>
+                <button class="btn-copy" id="btn-copy" onclick="copyPath()" disabled title="Copy path">COPY</button>
+            </div>
             <button class="btn" id="btn-browse" onclick="pickFolder()" style="margin-top:10px;">BROWSE FOLDER</button>
         </div>
 
@@ -54,12 +357,28 @@
 
         <div class="card">
             <span class="card-label">03 / MAINTENANCE</span>
-            <select id="pl-select" class="pl-select"><option>-- no iPod --</option></select>
+            <div class="custom-select-wrapper">
+                <div class="custom-select-trigger" id="custom-select-trigger" onclick="toggleDropdown()">
+                    <span id="selected-text">-- no iPod --</span>
+                </div>
+                <ul class="custom-options" id="custom-options"></ul>
+            </div>
             <div style="display:flex; gap:10px;">
                 <button class="btn" id="btn-refresh" onclick="refreshIpod()" style="flex:0 0 50px;">↻</button>
+                <button id="view-btn" class="btn" onclick="viewPlaylist()" disabled style="background:var(--accent); flex:0 0 50px;" title="View playlist content">👁</button>
                 <button id="del-btn" class="btn btn-danger" onclick="showModal()" disabled>DELETE PLAYLIST</button>
             </div>
+
+
+
         </div>
+		
+
+		<div class="card">
+			<button id="smooth-btn" class="btn" onclick="fullMaintenance()" style="flex:1;">CLEAN ORPHANS AND TAGS</button>
+		</div>
+		
+		
     </div>
 
     <div class="right-panel">
@@ -81,27 +400,93 @@
     let playlistToDelete = "";
     let isBusy           = false;
 
-    function lockUI() {
-        isBusy = true;
-        document.getElementById('status-tag').textContent = "BUSY - PROCESSING";
-        document.getElementById('status-tag').style.color = "var(--danger)";
-        ['sync-btn', 'del-btn', 'pl-select', 'btn-refresh', 'btn-browse'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.disabled = true;
+function lockUI() {
+    isBusy = true;
+    document.getElementById('status-tag').textContent = "BUSY - PROCESSING";
+    document.getElementById('status-tag').style.color = "var(--danger)";
+    
+    const trigger = document.getElementById('custom-select-trigger');
+    if (trigger) {
+        trigger.classList.add('disabled');
+        trigger.style.pointerEvents = "none";
+        trigger.style.opacity = "0.6";
+    }
+    
+    // AJOUT DE 'view-btn' ICI
+    ['sync-btn', 'del-btn', 'view-btn', 'btn-refresh', 'btn-browse', 'orphan-btn', 'smooth-btn'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = true;
+    });
+}
+
+function unlockUI() {
+    isBusy = false;
+    document.getElementById('status-tag').textContent = "READY";
+    document.getElementById('status-tag').style.color = "var(--accent)";
+    
+    const trigger = document.getElementById('custom-select-trigger');
+    if (trigger) {
+        trigger.classList.remove('disabled');
+        trigger.style.pointerEvents = "auto";
+        trigger.style.opacity = "1";
+    }
+    
+    // Boutons toujours actifs au repos
+    ['btn-refresh', 'smooth-btn', 'btn-browse', 'orphan-btn'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = false;
+    });
+    
+    // RÉACTIVATION CONDITIONNELLE (Sync, Delete et View)
+    const syncBtn = document.getElementById('sync-btn');
+    if (syncBtn) syncBtn.disabled = !selectedPath;
+    
+    const hasPlaylist = !!playlistToDelete;
+    const delBtn = document.getElementById('del-btn');
+    if (delBtn) delBtn.disabled = !hasPlaylist;
+
+    const viewBtn = document.getElementById('view-btn');
+    if (viewBtn) viewBtn.disabled = !hasPlaylist; // S'active seulement si une playlist est choisie
+}
+
+    function copyPath() {
+        if (!selectedPath) return;
+        navigator.clipboard.writeText(selectedPath).then(() => {
+            const btn = document.getElementById('btn-copy');
+            const orig = btn.textContent;
+            btn.textContent = '✔';
+            setTimeout(() => btn.textContent = orig, 3000);
         });
     }
 
-    function unlockUI() {
-        isBusy = false;
-        document.getElementById('status-tag').textContent = "READY";
-        document.getElementById('status-tag').style.color = "var(--accent)";
-        document.getElementById('btn-refresh').disabled = false;
-        document.getElementById('btn-browse').disabled = false;
-        document.getElementById('pl-select').disabled = false;
-        
-        if (selectedPath) document.getElementById('sync-btn').disabled = false;
-        const sel = document.getElementById('pl-select');
-        document.getElementById('del-btn').disabled = !sel.value;
+    async function viewPlaylist() {
+        if (isBusy) return;
+        const pl = playlistToDelete;
+        if (!pl) return;
+        lockUI();
+        const term = document.getElementById('term');
+        term.innerHTML = "";
+        try {
+            const r = await fetch('/api/list-playlist-tracks', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({playlist: pl})
+            });
+            const d = await r.json();
+            if (d.error) {
+                term.innerHTML += `<div style="color:var(--danger)">❌ ${d.error}</div>`;
+            } else {
+                term.innerHTML += `<div style="color:var(--accent)">📋 ${pl} — ${d.count} track(s)</div><br>`;
+                d.tracks.forEach((t, i) => {
+                    const mins = Math.floor(t.duration / 60);
+                    const secs = String(t.duration % 60).padStart(2, '0');
+                    term.innerHTML += `<div>${String(i+1).padStart(2,'0')}. ${t.name} <span style="color:#555">— ${mins}:${secs}</span></div>`;
+                });
+            }
+        } catch(e) {
+            term.innerHTML += `<div style="color:var(--danger)">❌ Error: ${e.message}</div>`;
+        }
+        unlockUI();
     }
 
     async function checkIpod() {
@@ -123,12 +508,12 @@
                 dot.className = 'dot';
                 label.textContent = 'iPod not detected';
                 label.style.color = 'var(--text)';
-                const sel = document.getElementById('pl-select');
-                if (sel) {
-                    sel.innerHTML = '<option value="">-- No iPod --</option>';
-                    sel.disabled = true;
-                }
-                if (refreshBtn) refreshBtn.disabled = true;
+                const ul = document.getElementById('custom-options');
+                if (ul) ul.innerHTML = '';
+                const st = document.getElementById('selected-text');
+                if (st) st.textContent = '-- No iPod --';
+                playlistToDelete = '';
+                if (refreshBtn) refreshBtn.disabled = false;
                 document.getElementById('del-btn').disabled = true;
             }
         } catch (error) {
@@ -140,24 +525,92 @@
         if (isBusy) return;
         await checkIpod();
     }
+	
+async function cleanOrphans() {
+    if (isBusy) return;
+
+    // Suppression de la notification : On passe direct au verrouillage et à l'exécution
+    lockUI();
+    
+    // Feedback visuel dans le terminal
+    const term = document.getElementById('term');
+    term.innerHTML = "<div>> Scanning for orphans...</div>";
+    
+    // Exécution directe de la route API
+    await executeStream('/api/clean-orphans', {});
+    
+    unlockUI();
+    await checkIpod();
+}
+
+	async function smoothTags() {
+    if (isBusy) return;
+    lockUI();
+    const term = document.getElementById('term');
+    term.innerHTML = "<div>> 🎨 Starting logical smoothing (2026)...</div>";
+    
+    await executeStream('/api/smooth-tags', {});
+    
+    unlockUI();
+    await checkIpod(); // <--- Très important pour voir le résultat !
+}
 
     async function loadPlaylists() {
         if (isBusy) return;
         const r = await fetch('/api/list-playlists', {method:'POST'});
         const d = await r.json();
-        const sel = document.getElementById('pl-select');
-        if (d.playlists) {
-            const prev = sel.value;
-            sel.innerHTML = d.playlists.map(p => `<option value="${p}">${p}</option>`).join('');
-            if (prev && d.playlists.includes(prev)) sel.value = prev;
-            document.getElementById('del-btn').disabled = d.playlists.length === 0;
+        const ul = document.getElementById('custom-options');
+        const selectedText = document.getElementById('selected-text');
+        if (d.playlists && d.playlists.length > 0) {
+            ul.innerHTML = '';
+            d.playlists.forEach(p => {
+                const li = document.createElement('li');
+                li.className = 'custom-option' + (p === playlistToDelete ? ' selected' : '');
+                li.textContent = p;
+                li.onclick = () => selectPlaylist(p);
+                ul.appendChild(li);
+            });
+            // Garder la sélection courante si encore valide
+            if (!playlistToDelete || !d.playlists.includes(playlistToDelete)) {
+                selectPlaylist(d.playlists[0]);
+            } else {
+                selectedText.textContent = playlistToDelete;
+            }
+            document.getElementById('del-btn').disabled = false;
+        } else {
+            ul.innerHTML = '';
+            selectedText.textContent = '-- empty --';
+            playlistToDelete = '';
+            document.getElementById('del-btn').disabled = true;
         }
     }
+
+    function toggleDropdown() {
+        if (isBusy) return;
+        document.getElementById('custom-options').classList.toggle('open');
+    }
+
+    function selectPlaylist(name) {
+    playlistToDelete = name;
+    document.getElementById('selected-text').textContent = name;
+    document.getElementById('custom-options').classList.remove('open');
+    
+    document.querySelectorAll('.custom-option').forEach(li => {
+        li.className = 'custom-option' + (li.textContent === name ? ' selected' : '');
+    });
+
+    // --- AJOUTE CES DEUX LIGNES ---
+    const hasPlaylist = !!name;
+    document.getElementById('del-btn').disabled = !hasPlaylist;
+    document.getElementById('view-btn').disabled = !hasPlaylist;
+}
 
     async function pickFolder() {
         if (isBusy) return;
         try {
             const r = await fetch('/api/browse-folder', { method: 'POST' });
+            // Le dialog tkinter réveille COM — on en profite pour mettre à jour le statut iPod
+            checkIpod();
             const d = await r.json();
             if (d.folder && d.folder !== "None" && d.folder !== true) {
                 selectedPath = d.folder;
@@ -169,6 +622,7 @@
                     body: JSON.stringify({ folder: d.folder })
                 });
                 const d2 = await r2.json();
+                document.getElementById('btn-copy').disabled = false;
                 if (d2.count > 0) {
                     document.getElementById('sync-btn').disabled = false;
                     document.getElementById('term').innerHTML += `<div>> Folder linked: ${d2.count} files detected.</div>`;
@@ -181,10 +635,7 @@
     }
 
     function showModal() {
-        if (isBusy) return;
-        const pl = document.getElementById('pl-select').value;
-        if (!pl) return;
-        playlistToDelete = pl;
+        if (isBusy || !playlistToDelete) return;
         document.getElementById('modal').style.display = 'flex';
     }
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
@@ -205,6 +656,7 @@
         unlockUI();
         await checkIpod();
     }
+	
 
     async function executeStream(url, body) {
         const term = document.getElementById('term');
@@ -227,6 +679,56 @@
             term.innerHTML += `<div style="color:var(--danger)">❌ Error: ${e.message}</div>`;
         }
     }
+
+
+
+async function fullMaintenance() {
+    if (isBusy) return;
+    
+    lockUI();
+    const term = document.getElementById('term');
+    
+    try {
+        // --- PARTIE 1 : ORPHANS ---
+        term.innerHTML = "<div>> 🔍 ÉTAPE 1: Scanning for orphans...</div>";
+        await executeStream('/api/clean-orphans', {});
+        
+        // Petit délai visuel ou log pour séparer les deux
+        term.innerHTML += "<div>> ✅ Orphans cleaned !</div>";
+        
+        // --- PARTIE 2 : SMOOTH ---
+        term.innerHTML += "<div>> 🎨 ÉTAPE 2: Starting logical smoothing...</div>";
+        await executeStream('/api/smooth-tags', {});
+        
+
+    } catch (error) {
+        term.innerHTML += `<div style="color:var(--danger)">> ❌ Erreur: ${error.message}</div>`;
+        console.error("Erreur Full Maintenance:", error);
+    } finally {
+        // --- FINITION ---
+        unlockUI();
+        await checkIpod(); // On rafraîchit tout à la fin
+    }
+}
+	
+
+
+    // Fermer dropdown si clic ailleurs
+    document.addEventListener('click', e => {
+        const wrapper = document.querySelector('.custom-select-wrapper');
+        if (wrapper && !wrapper.contains(e.target)) {
+            document.getElementById('custom-options').classList.remove('open');
+        }
+    });
+
+        // Heartbeat : signale au serveur que la fenêtre est ouverte
+    // ET vérifie l'iPod toutes les 5s (détection branchement/débranchement)
+    async function sendHeartbeat() {
+        try { await fetch('/api/heartbeat', {method:'POST'}); } catch(e) {}
+        if (!isBusy) checkIpod();
+    }
+    sendHeartbeat();
+    setInterval(sendHeartbeat, 5000);
 
     checkIpod();
 </script>
