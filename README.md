@@ -30,9 +30,9 @@ This app is designed for users who hate the rigid structure of the iTunes Librar
 
 * **Lazy Syncing:** No need to manually import songs into iTunes first.
 * **Strict Waterfall Sequence:** Windows finishes 100% of the work (renaming + tagging) before iTunes is even authorized to touch the files.
-* **Physical Filename Authority:** The filename on your disk becomes the *Title* and *Playlist name* newly created on your iPod.
+* **Physical Filename Authority:** The filename on your disk becomes the *Title* on your iPod.
 * **Automatic Sanitization (Slugify):** No more special characters, emojis, or sync-breaking symbols in your filenames.
-* **Folder-to-Group Logic:** The folder name is automatically injected as the *Artist* and *Album*, ensuring perfect sorting on the device.
+* **Folder-to-Group Logic:** The folder name is automatically injected as the *Artist*, *Album* and *Playlist name* newly created, ensuring perfect sorting on the device.
 * **Deep Physical Purge:** A dedicated tool to wipe a playlist and its associated physical files from the iPod's memory to free up space.
 
 ---
