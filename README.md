@@ -82,12 +82,12 @@ Your iPod **MUST** be configured for manual management:
 ### 2. Dependencies
 ```bash
 pip install flask pywin32 mutagen
-
+```
 ---
 
 ## 📦 Compilation & Versions
 
-#### **Why 2 scripts ?**
+#### 1. Why 2 scripts ?
 Depending on how you want the app to behave, use one of these two scripts:
 
 | Script | Version | Behavior |
@@ -95,7 +95,7 @@ Depending on how you want the app to behave, use one of these two scripts:
 | `server_lite.py` | **Lite** | Starts a background Flask server and opens your **default web browser** (Chrome, Edge, etc.) to show the UI. |
 | `server_webv.py` | **Big / Standalone** | Uses the `pywebview` library to open the UI in a **dedicated, independent window** (no browser tabs/bars). It feels like a native Windows App. |
 
-#### **Build Commands (PyInstaller):**
+#### 2. Build Commands (PyInstaller)
 
 **For Lite version:**
 `pyinstaller --noconfirm --onefile --windowed --name "iPod_Manager_Lite4" --add-data "index.html;." --exclude-module "webview" --hidden-import "win32com.client" --hidden-import "pythoncom" server_lite.py`
