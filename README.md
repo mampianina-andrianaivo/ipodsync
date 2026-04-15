@@ -41,6 +41,8 @@ This app is designed for users who hate the rigid structure of the iTunes Librar
 
 To guarantee that your iPod displays exactly what you see in your Windows folder, the app follows a non-negotiable sequence:
 
+0. **Tested on iPod Shuffle 4th Gen, Nano 6th Gen and Nano 7th Gen.**
+
 1.  **Phase 1: Windows Physical Preparation (Isolated)**
     * **Rename First:** Files are renamed physically on your disk.
     * **Tag Second:** The new filename is written into the *Title* tag. *Artist* and *Album* are overwritten by the local folder name.
