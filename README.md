@@ -1,8 +1,8 @@
+# ✨ Read this readme first please
+
 # 🎧 iPod LazySync OS
 
 **"Sync your playlists the lazy way (for people who don't care about library management)."**
-
-✨ **Read this readme first please**
 
 ---
 
