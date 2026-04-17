@@ -21,6 +21,8 @@ This app is designed for users who hate the rigid structure of the iTunes Librar
 * It **permanently renames** your physical files on Windows to a clean format.
 * It **overwrites** internal ID3 tags (Title, Artist, Album) to force perfect iPod grouping.
 * **The "Source of Truth" is the file name:** The app takes what you named your file on Windows and forces it as the song title.
+* **Automatic Artwork Injection:** The app forces a hardcoded **Base64 image** into every track's metadata. This ensures you never see a blank screen on your iPod.
+    * **Note:** You are free to change this image in the code (Base64 string). We recommend using an image under **35kb** to keep the process fast and avoid UI lag on the iPod. Many websites allow you to convert PNG/JPEG to Base64.
 * **Why?** Because a "lazy" user doesn't want to see "Unknown Artist" or 50 different albums for one folder. We clean everything so you don't have to. 
 * **Maybe backup:** If you are not sure, I advise you to backup your music folder before a first sync if you aren't sure. **(But then again, a true lazy user probably won't).**
 
@@ -29,7 +31,8 @@ This app is designed for users who hate the rigid structure of the iTunes Librar
 ## ✨ Key Features
 
 * **Lazy Syncing:** No need to manually import songs into iTunes first.
-* **Strict Waterfall Sequence:** Windows finishes 100% of the work (renaming + tagging) before iTunes is even authorized to touch the files.
+* **Random Discovery:** Generate instant discovery playlists (10, 20, 50 tracks) from your existing iPod library at the click of a button.
+* **Strict Waterfall Sequence:** Windows finishes 100% of the work (renaming + tagging + artwork injection) before iTunes is even authorized to touch the files.
 * **Physical Filename Authority:** The filename on your disk becomes the *Title* on your iPod.
 * **Automatic Sanitization (Slugify):** No more special characters, emojis, or sync-breaking symbols in your filenames.
 * **Folder-to-Group Logic:** The folder name is automatically injected as the *Artist*, *Album* and *Playlist name* newly created, ensuring perfect sorting on the device.
@@ -46,11 +49,12 @@ To guarantee that your iPod displays exactly what you see in your Windows folder
 1.  **Phase 1: Windows Physical Preparation (Isolated)**
     * **Rename First:** Files are renamed physically on your disk.
     * **Tag Second:** The new filename is written into the *Title* tag. *Artist* and *Album* are overwritten by the local folder name.
+    * **Artwork Third:** The Base64 image is injected directly into the file metadata.
     * **Cool Down:** A system pause ensures Windows flushes all file handles and disk writes.
 2.  **Phase 2: iTunes Authorization**
     * Only now is the iTunes COM bridge initialized.
 3.  **Phase 3: Secure Transfer**
-    * Files are imported. Since they are already "perfect" on disk, iTunes cannot mess up the metadata or display old cached information.
+    * Files are imported. Since they are already "perfect" on disk, iTunes reads the metadata directly from the file. We no longer force iTunes to replace artwork via API as the file itself already carries it.
 
 ---
 
@@ -65,13 +69,15 @@ When you launch the app, the interface will open automatically.
 
 ### **02 / ACTIONS**
 * **LAUNCH SYNC:** Starts the "Waterfall" sequence. Only active when a folder and iPod are ready.
+* **RANDOM BUTTONS (10/20/50):** Instantly creates a new playlist (named `RANDOMX...`) with random songs from your library. These lists do not modify your existing tags.
 
 ### **03 / MAINTENANCE**
 * **Playlist Dropdown:** Select any existing playlist on your iPod.
 * **↻ (Refresh):** Force a re-scan of the device's playlists.
 * **👁 (View):** Lists every track inside the selected playlist in the terminal.
-* **DELETE PLAYLIST:** Triggers a **Confirm Purge**. This physically deletes the MP3s from the iPod's storage.
-* **CLEAN ORPHANS AND TAGS:** Scans for "ghost" files and fixes logical inconsistencies, then deletes all mp3 inside the Music storage of the iPod when they are associated with any of your playlist, and corrects all previous "incorrect" tag (maybe your weird tags and orphan mp3 before using this tool).
+* **DELETE PLAYLIST:** * If the playlist starts with `RANDOMX`: It only removes the playlist container (songs stay on the iPod).
+    * For normal folders: It triggers a **Confirm Purge** and physically deletes the MP3s from the iPod's storage.
+* **CLEAN ORPHANS AND TAGS:** Scans for "ghost" files and fixes logical inconsistencies. It also corrects tags but **automatically ignores `RANDOMX` playlists** to preserve your original music organization.
 
 ---
 
