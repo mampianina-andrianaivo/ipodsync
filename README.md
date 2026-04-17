@@ -9,7 +9,7 @@
 ## 🚀 The "Lazy" Philosophy
 This app is designed for users who hate the rigid structure of the iTunes Library. If you are used to the **"Drag & Drop"** life and you don't want to spend hours pre-arranging playlists in your library before syncing them to your device, this is for you.
 
-**The goal:** You have a folder on your PC. You want it as a playlist on your iPod. You click one button. Done. 
+**The goal:** You have a folder on your PC. You want it as a playlist on your iPod. You click two buttons. Done. 
 
 > **Note for the non-lazy:** If you care about your original file names or your hyper-detailed ID3 tags, **stay away**. This tool is for those who value speed and "iPod-ready" grouping over metadata preservation. If you want strict library management, stick to the standard iTunes way.
 
