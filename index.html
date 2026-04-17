@@ -364,13 +364,10 @@ font-size:7px;}
                 <ul class="custom-options" id="custom-options"></ul>
             </div>
             <div style="display:flex; gap:10px;">
-                <button class="btn" id="btn-refresh" onclick="refreshIpod()" style="flex:0 0 50px;">↻</button>
-                <button id="view-btn" class="btn" onclick="viewPlaylist()" disabled style="background:var(--accent); flex:0 0 50px;" title="View playlist content">👁</button>
-                <button id="del-btn" class="btn btn-danger" onclick="showModal()" disabled>DELETE PLAYLIST</button>
+                <button class="btn" id="btn-refresh" onclick="refreshIpod()" style="flex:0 0 50px;">↱↲</button>
+                <button id="view-btn" class="btn" onclick="viewPlaylist()" disabled style="background:var(--accent); flex:0 0 50px;" title="View playlist content">☰</button>
+                <button id="del-btn" class="btn btn-danger" onclick="showModal()" disabled>✖</button>
             </div>
-
-
-
         </div>
 		
 
@@ -378,6 +375,13 @@ font-size:7px;}
 			<button id="smooth-btn" class="btn" onclick="fullMaintenance()" style="flex:1;">CLEAN ORPHANS AND TAGS</button>
 		</div>
 		
+		<div class="card">
+            <span class="card-label">04 / GENERATOR</span>
+            <div style="display:flex; gap:10px;">
+                <button id="gen-10-btn" class="btn" onclick="createRandom(10)" style="flex:1;">RANDOM 10</button>
+                <button id="gen-20-btn" class="btn" onclick="createRandom(20)" style="flex:1;">RANDOM 20</button>
+            </div>
+        </div>
 		
     </div>
 
@@ -413,10 +417,10 @@ function lockUI() {
     }
     
     // AJOUT DE 'view-btn' ICI
-    ['sync-btn', 'del-btn', 'view-btn', 'btn-refresh', 'btn-browse', 'orphan-btn', 'smooth-btn'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.disabled = true;
-    });
+    ['sync-btn', 'del-btn', 'view-btn', 'btn-refresh', 'btn-browse', 'orphan-btn', 'smooth-btn', 'gen-10-btn', 'gen-20-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = true;
+});
 }
 
 function unlockUI() {
@@ -432,7 +436,7 @@ function unlockUI() {
     }
     
     // Boutons toujours actifs au repos
-    ['btn-refresh', 'smooth-btn', 'btn-browse', 'orphan-btn'].forEach(id => {
+    ['btn-refresh', 'smooth-btn', 'btn-browse', 'orphan-btn', 'gen-10-btn', 'gen-20-btn'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.disabled = false;
     });
@@ -680,7 +684,26 @@ async function cleanOrphans() {
         }
     }
 
-
+async function createRandom(count) {
+        if (isBusy) return;
+        
+        lockUI();
+        const term = document.getElementById('term');
+        term.innerHTML = `<div>> 🎲 Generating random playlist (${count} tracks)...</div>`;
+        
+        try {
+            // On utilise executeStream car smooth_logic_internal va renvoyer du flux (log)
+            // Note: Assure-toi que tes routes Python utilisent 'yield log(...)'
+            await executeStream(`/api/create-random-${count}`, {});
+            
+            term.innerHTML += `<div style="color:var(--accent)">> ✅ Generation & Smoothing complete.</div>`;
+        } catch (e) {
+            term.innerHTML += `<div style="color:var(--danger)">❌ Error during generation: ${e.message}</div>`;
+        } finally {
+            unlockUI();
+            await checkIpod(); // Pour rafraîchir la liste déroulante avec la nouvelle playlist
+        }
+    }
 
 async function fullMaintenance() {
     if (isBusy) return;
