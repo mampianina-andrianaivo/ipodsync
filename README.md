@@ -71,14 +71,14 @@ When you launch the app, the interface will open automatically.
 * **LAUNCH SYNC:** Starts the "Waterfall" sequence. Only active when a folder and iPod are ready.
 
 ### **03 / MAINTENANCE**
-* **Playlist Dropdown:** Select any existing playlist on your iPod.
+* **Playlist Dropdown :** Select any existing playlist on your iPod.
 * **Refresh ↱↲ :** Force a re-scan of the device's playlists.
-* **List ☰:** Lists every track inside the selected playlist in the terminal.
-* **Delete playlist ✖:**
+* **List ☰ :** Lists every track inside the selected playlist in the terminal.
+* **Delete playlist ✖ :**
     * Delete the playlist you have selected from the dropdown menu. If the playlist starts with `RANDOMX`: It only removes the playlist container (songs stay on the iPod).
     * For normal folders: It triggers a **Confirm Purge** and physically deletes the MP3s from the iPod's storage.
-* **RANDOM BUTTONS (10 or 20):** Instantly creates a new playlist (named `RANDOMX...`) with random songs from your library. These lists do not modify your existing tags.
-* **CLEAN ORPHANS AND TAGS:** Scans for "ghost" files and fixes logical inconsistencies. It also corrects tags but **automatically ignores `RANDOMX` playlists** to preserve your original music organization.
+* **RANDOM BUTTONS (10 or 20) :** Instantly creates a new playlist (named `RANDOMX...`) with random songs from your library. These lists do not modify your existing tags.
+* **CLEAN ORPHANS AND TAGS :** Scans for "ghost" files and fixes logical inconsistencies. It also corrects tags but **automatically ignores `RANDOMX` playlists** to preserve your original music organization.
 
 ---
 
