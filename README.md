@@ -63,11 +63,11 @@ To guarantee that your iPod displays exactly what you see in your Windows folder
 When you launch the app, the interface will open automatically.
 
 ### **01 / DEVICE**
-* **BROWSE FOLDER:** Pick your local music source. Once selected, the path appears in the "Path Box".
-* **COPY:** Copies the current folder path to your clipboard.
 * **IPOD STATUS:** Real-time heartbeat detection (Green/Grey dot) to check if your device is connected.
 
 ### **02 / ACTIONS**
+* **BROWSE FOLDER:** Pick your local music source. Once selected, the path appears in the "Path Box".
+* **COPY:** Copies the current folder path to your clipboard.
 * **LAUNCH SYNC:** Starts the "Waterfall" sequence. Only active when a folder and iPod are ready.
 
 ### **03 / MAINTENANCE**
