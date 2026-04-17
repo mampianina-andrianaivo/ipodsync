@@ -3,7 +3,7 @@
 # 🎧 iPod LazySync OS
 
 * **Sync your playlists the lazy way (for people who don't care about library management).**
-* **If you dont have python installation in your Windows (not Mac, not Linux) computer, you can not use this tool**
+* **If you dont have python installation AND iTunes installation (the real one, not the weird version from Microsoft Store) on your Windows (not Mac, not Linux) computer, you can not use this tool**
 
 ---
 
